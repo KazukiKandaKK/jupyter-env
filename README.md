@@ -13,9 +13,10 @@ source ~/.zshrc
 
 ## Conda上に仮想環境を作成
 ```bash
-conda create -n {環境名} python=3.X
+conda create -n {環境名} python=3.9
 e. g. 
 conda create -n jupyter # pythonのバージョンはこだわりがなければ省略OK
+※最新のpythonのバージョンだとライブラリがうまく動かないかも
 ```
 
 ## Condaの設定
