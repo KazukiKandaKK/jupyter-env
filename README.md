@@ -46,3 +46,57 @@ device = torch.device('mps')
 torch.backends.mps.is_available()
 # Trueが返ればOK
 ```
+
+## GPUの使用確認 ( Keras )
+下記の通りに実行する。
+ライブラリのインストール
+```bash
+pip install tensorflow-macos
+pip install tensorflow-metal
+```
+
+Jupyter Labの起動
+```bash
+jupyter lab
+```
+
+GPUの使用の確認
+```python
+import tensorflow as tf
+from tensorflow import keras
+
+print("TensorFlow version:", tf.__version__)
+print("Is GPU available?", tf.config.list_physical_devices('GPU'))
+```
+下記が返る
+```bash
+TensorFlow version: 2.16.2
+Is GPU available? [PhysicalDevice(name='/physical_device:GPU:0', device_type='GPU')]
+```
+適当にコードを実行する
+```python3
+import tensorflow as tf
+import numpy as np
+
+# 簡単なデータセットとモデルを作成
+(x_train, y_train), (x_test, y_test) = tf.keras.datasets.mnist.load_data()
+x_train, x_test = x_train / 255.0, x_test / 255.0
+
+model = tf.keras.models.Sequential([
+    tf.keras.layers.Flatten(input_shape=(28, 28)),
+    tf.keras.layers.Dense(128, activation='relu'),
+    tf.keras.layers.Dense(10, activation='softmax')
+])
+
+model.compile(optimizer='adam',
+              loss='sparse_categorical_crossentropy',
+              metrics=['accuracy'])
+
+# トレーニング
+model.fit(x_train, y_train, epochs=5)
+
+# 評価
+model.evaluate(x_test, y_test)
+```
+
+
