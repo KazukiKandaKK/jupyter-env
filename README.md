@@ -37,3 +37,12 @@ conda install pytorch::pytorch
 ```bash
 jupyter lab
 ```
+
+## GPUの使用確認 ( Pytorch )
+下記の通りに実行する。
+```python
+import torch
+device = torch.device('mps')
+torch.backends.mps.is_available()
+# Trueが返ればOK
+```
